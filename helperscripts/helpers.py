@@ -186,6 +186,8 @@ def get_filenames(start_path, look_in_path, subdir, *args):
     for f in file_list:
         stopwords = ['summer', 'facility', 'usage', 'stats', 'outdoor']
         f = f.split("\\")[-1]
+        # tidy up the extra path data
+        f = re.sub("Users/.*/Documents/", "", f)
         f = f.replace("Stats","").replace("xlsx","").split()
         f = " ".join([x for x in f if x.lower() not in stopwords])
         pattern = re.compile('[\W_]+')
@@ -210,7 +212,8 @@ def iter_transform_count_files(start_path, look_in_path, subdir, write_path, fil
     these_files, these_names = get_filenames(start_path, look_in_path, subdir)
     # itereate and apply functions to parse data
     for i, f in enumerate(these_files):
-        print(f"trying...{f}")
+        f2 = re.sub("Users/.*/Documents/", "", f)
+        print(f"trying...{f2}")
         # extract valid dataframes
         try:
             dfs = excel_extractor(f)
@@ -233,4 +236,4 @@ def iter_transform_count_files(start_path, look_in_path, subdir, write_path, fil
                 prep_df.to_csv(f"{start_path}/{write_path}/{file_prepend}_{these_names[i]}{j+5}.csv", index = False)
             else:
                 print(f'no records in month {j+5} for {these_names[i]}')
-        print(f"done with...{these_names[i]}")
+        print(f"done with...{f2}")
