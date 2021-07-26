@@ -5,6 +5,8 @@
 
 <p>The results folder contains all of the csv files as parsed from the source, but the important collated and tidy csv is final_output.csv at the top level here.</p>
 
+### Dependencies
+see ~/setup/environment.yml for OSX build with conda
 
 ### License
 MIT License
